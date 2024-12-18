@@ -10,7 +10,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: 'https://your-vercel-app.vercel.app' }));
+app.use(cors({ origin: 'https://codebyharsh.vercel.app/' }));
 
 // Connect to MongoDB
 connectDB();
