@@ -10,13 +10,23 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: 'https://codebyharsh.vercel.app/' }));
+
+const corsOptions = {
+  origin: 'https://codebyharsh.vercel.app', // Allow this domain to access your backend
+  methods: ['GET', 'POST'], // Allow specific HTTP methods
+  allowedHeaders: ['Content-Type'], // Allow specific headers
+};
+
+// Use the CORS middleware with the defined options
+app.use(cors(corsOptions));
 
 // Connect to MongoDB
 connectDB();
-app.get('/demo',(req,res)=>{
-    res.send("Hello, Backend is running .............");
-})
+
+app.get('/demo', (req, res) => {
+  res.send("Hello, Backend is running .............");
+});
+
 // Routes
 app.use("/api", contactRoutes);
 
