@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 // Connect to MongoDB
 connectDB();
 
-app.get('/demo', (req, res) => {
+app.get('/', (req, res) => {
   res.send("Hello, Backend is running .............");
 });
 
