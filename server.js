@@ -11,25 +11,34 @@ const app = express();
 // Middleware
 app.use(express.json());
 
+// CORS Configuration
 const corsOptions = {
-  origin: 'https://codebyharsh.vercel.app', // Allow this domain to access your backend
-  methods: ['GET', 'POST'], // Allow specific HTTP methods
-  allowedHeaders: ['Content-Type'], // Allow specific headers
+  origin: function (origin, callback) {
+    const allowedOrigins = ['https://codebyharsh.vercel.app', 'http://localhost:3000'];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true,
 };
-
-// Use the CORS middleware with the defined options
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Handle preflight requests
 
 // Connect to MongoDB
 connectDB();
 
+// Test Route
 app.get('/', (req, res) => {
   res.send("Hello, Backend is running .............");
 });
 
-// Routes
+// API Routes
 app.use("/api", contactRoutes);
 
-// Server listening
+// Server Listening
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
